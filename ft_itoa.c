@@ -1,44 +1,57 @@
 #include <stdlib.h>
 
-int ft_isnegative(int n, int *len, char *str)
+static int	ft_nblen(int n)
 {
-    if (n < 0)
-    {
-        (*len)++;
-        if(str)
-            str[0] = '-';
-        return (-1);
-    }
-    return (1);
+	int	len;
+	int	tmp;
+
+	len = 1;
+	tmp = n;
+	tmp /= 10;
+	while (tmp)
+	{
+		len++;
+		tmp /= 10;
+	}
+	return (len);
 }
 
-char    *ft_itoa(int n)
+static int	ft_isnegative(int n, int *len, char *str)
 {
-    char *str;
-    int len;
-    int sign;
-    int temp;
-
-    len = 1;
-    temp = n;
-    while(temp/=10)
-        len++;
-    sign = ft_isnegative(n,&len,NULL);
-    str = (char *)malloc(sizeof(char) * (len + 1));
-    if (!str)
-        return (NULL);
-    str[len] = '\0';
-    if (sign == -1)
-        ft_isnegative(n,&len,str);
-    while(len-- > 0 && n != 0)
-    {
-        str[len] = (n % 10) * sign + '0';
-        n /= 10;
-    }
-    if (n == 0 && sign == 1)
-        str[0] = '0';
-    return (str);
+	if (n < 0)
+	{
+		(*len)++;
+		if (str)
+			str[0] = '-';
+		return (-1);
+	}
+	return (1);
 }
+
+char	*ft_itoa(int n)
+{
+	char	*str;
+	int		len;
+	int		sign;
+
+	len = ft_nblen(n);
+	sign = ft_isnegative(n, &len, NULL);
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	str[len] = '\0';
+	if (sign == -1)
+		ft_isnegative(n, &len, str);
+	while (len-- > 0 && n != 0)
+	{
+		str[len] = (n % 10) * sign + '0';
+		n /= 10;
+	}
+	if (n == 0 && sign == 1)
+		str[0] = '0';
+	return (str);
+}
+
 
 
 #include <stdio.h>
