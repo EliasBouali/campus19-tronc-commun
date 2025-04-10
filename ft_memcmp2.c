@@ -1,21 +1,29 @@
 #include <stddef.h>
 
+/*
+ * Compare les n premiers octets des zones mémoire pointées par s1 et s2.
+ * Retourne 0 si elles sont égales.
+ * Retourne la différence entre les deux premiers octets qui diffèrent sinon.
+ */
+
+
+
 int ft_memcmp(const void *s1, const void *s2, size_t n)
 {
     const unsigned char *p1 = (const unsigned char *)s1;
     const unsigned char *p2 = (const unsigned char *)s2;
+	size_t	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (0);
     if (n == 0)
-        return 0;
-    if (s1 == s2)
-        return 0;
-    if (s1 == NULL || s2 == NULL)
         return 0;
     while (n--)
     {
-        if (*p1 != *p2)
-            return (*p1 - *p2);
-        p1++;
-        p2++;
+        if (p1[i] != p2[i])
+            return (p1[i] - p2[i]);
+        i++;
     }
     return 0;
 }
